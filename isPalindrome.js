@@ -33,7 +33,7 @@ s consists only of printable ASCII characters.
  */
 
 /**
- * @param {string} s
+  @param {string} s
  * @return {boolean}
  */
 
