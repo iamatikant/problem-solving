@@ -41,6 +41,19 @@ class PubSub2 {
       this.events[name] = [{ callback, once: true }];
     }
   }
+
+  subscribeOnceAsync(name) {
+    return new Promise((resolve) => {
+      if (name in this.events) {
+        this.events[name] = [
+          ...this.events[name],
+          { callback: resolve, once: true },
+        ];
+      } else {
+        this.events[name] = [{ callback: resolve, once: true }];
+      }
+    });
+  }
 }
 
 const eventObject = new PubSub2();
@@ -59,6 +72,13 @@ const event3 = eventObject.subscribeOnce("first", (data) => {
 // eventObject.publish("first", "new notification");
 // event1.remove();
 
-eventObject.publish("first", "publish all");
-eventObject.publish("first", "publish all");
-eventObject.publishAll("publish all");
+const event4 = eventObject.subscribeOnceAsync("first").then(function (payload) {
+  console.log("I am invoked once async: ", payload);
+});
+
+// eventObject.publish("first", "publish all");
+// eventObject.publish("first", "publish all");
+// eventObject.publishAll("publish all");
+
+eventObject.publish("first", "Foo once user");
+eventObject.publish("first", "Foo once user two");
