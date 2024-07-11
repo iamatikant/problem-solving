@@ -1,26 +1,45 @@
 class PubSub2 {
   constructor() {
+    // this.events = {name: [{ once: true, callback: func}]};
     this.events = {};
   }
+
   subscribe(name, callback) {
     if (name in this.events) {
-      this.events[name] = [...this.events[name], callback];
+      this.events[name] = [...this.events[name], { callback }];
     } else {
-      this.events[name] = [callback];
+      this.events[name] = [{ callback }];
     }
     return {
       remove: () => {
         this.events[name] = this.events[name].filter(
-          (call) => call !== callback
+          (call) => call.callback !== callback
         );
       },
     };
   }
+
   publish(name, data) {
     const callbacks = this.events[name];
     callbacks.forEach((item) => {
-      item(data);
+      item.callback(data);
     });
+    this.events[name] = this.events[name].filter((item) => !item.once);
+  }
+
+  publishAll(data) {
+    for (const item in this.events) {
+      this.events[item].forEach((item) => item.callback(data));
+      this.events[item] = this.events[item].filter((item) => !item.once);
+    }
+  }
+
+  subscribeOnce(name, callback) {
+    if (name in this.events) {
+      this.events[name] = [...this.events[name], { callback, once: true }];
+    } else {
+      this.events[name] = [{ callback, once: true }];
+    }
   }
 }
 
@@ -33,7 +52,13 @@ const event2 = eventObject.subscribe("first", (data) => {
   console.log("second data: ", data);
 });
 
-eventObject.publish("first", "new notification");
-event1.remove();
+const event3 = eventObject.subscribeOnce("first", (data) => {
+  console.log("subscribe once event", data);
+});
 
-eventObject.publish("first", "new notification2");
+// eventObject.publish("first", "new notification");
+// event1.remove();
+
+eventObject.publish("first", "publish all");
+eventObject.publish("first", "publish all");
+eventObject.publishAll("publish all");
