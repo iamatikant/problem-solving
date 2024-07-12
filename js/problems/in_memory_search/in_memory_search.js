@@ -35,13 +35,15 @@ class InMemorySearch {
   constructor() {
     this.data = new Map();
   }
-  addDocument(name, ...args) {
+  addDocuments(name, ...args) {
     this.data.set(name, args);
   }
   search(name, callback, { key, asc }) {
     const movies = this.data.get(name);
-    const filteredMovies = callback(movies);
-    return filteredMovies.sort((a, b) => a.key - b.key);
+    const filteredMovies = movies.filter(callback);
+    return filteredMovies.sort((a, b) =>
+      asc ? a[key] - b[key] : b[key] - a[key]
+    );
   }
 }
 
