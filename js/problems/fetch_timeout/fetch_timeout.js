@@ -56,22 +56,53 @@
 
 // Working version 2 best code
 
-const fetchWithTimeout = (url, time) => {
-  return new Promise((resolve, reject) => {
-    const timeOut = setTimeout(() => {
-      console.log("this is being timeout");
-      reject(new Error("Req time out"));
-    }, time);
+// const fetchWithTimeout = (url, time) => {
+//   return new Promise((resolve, reject) => {
+//     const timeOut = setTimeout(() => {
+//       console.log("this is being timeout");
+//       reject(new Error("Req time out"));
+//     }, time);
 
-    fetch(url)
-      .then((data) => {
-        clearTimeout(timeOut);
-        resolve(data);
+//     fetch(url)
+//       .then((data) => {
+//         clearTimeout(timeOut);
+//         resolve(data);
+//       })
+//       .catch((error) => {
+//         clearTimeout(timeOut);
+//         reject(error);
+//       });
+//   });
+// };
+
+// using AbortController class
+
+const fetchWithTimeout = (url, duration) => {
+  return new Promise((resolve, reject) => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    let timerid = null;
+
+    fetch(url, { signal })
+      .then((resp) => {
+        resp
+          .json()
+          .then((e) => {
+            clearTimeout(timerid);
+            resolve(e);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       })
       .catch((error) => {
-        clearTimeout(timeOut);
         reject(error);
       });
+
+    timerid = setTimeout(() => {
+      console.log("Aborted");
+      controller.abort();
+    }, duration);
   });
 };
 
