@@ -62,5 +62,8 @@ function retry(asyncFn, retries, delay, finalError) {
           console.log(err);
         });
     }
+    if (numberOfFunctionCalls === retries) {
+      return finalError;
+    }
   }, delay);
 }
