@@ -13,12 +13,12 @@
 //   </section>
 // </div>
 
-const root = document.getElementById("root");
-const target = document.getElementById("target");
-console.log(generateSelector(root, target));
+// const root = document.getElementById("root");
+// const target = document.getElementById("target");
+// console.log(generateSelector(root, target));
 
-// Output:
-// "div[id='root'] > section:nth-child(2) > p:nth-child(1) > span:nth-child(1) > button:nth-child(2)"
+// // Output:
+// // "div[id='root'] > section:nth-child(2) > p:nth-child(1) > span:nth-child(1) > button:nth-child(2)"
 
 function generateSelector(root, target) {
   const cssSelector = [];
@@ -38,3 +38,53 @@ function generateSelector(root, target) {
   document.querySelector(selector).style.background = "red";
   return selector;
 }
+
+/**
+ *
+ * Input: */
+// const input = (
+//   <div id="root">
+//     <article>Prepare for interview</article>
+//     <section>
+//       on
+//       <p>
+//         <span>
+//           Learnersbucket
+//           <button>click me!</button>
+//           <button id="target">click me!</button>
+//         </span>
+//       </p>
+//     </section>
+//   </div>
+// );
+
+// const root = document.getElementById("root");
+// const target = document.getElementById("target");
+// console.log(generateSelector(root, target));
+
+// Output:
+// "div[id='root'] > section:nth-child(2) > p:nth-child(1) > span:nth-child(1) > button:nth-child(2)"
+
+// function generateSelector(root, target) {
+//   const currentId = root.getAttribute("id");
+//   return findPath(root, 0, target, `div[id=${currentId}] > `);
+// }
+
+// function findPath(currentNode, currentNodeCount, target, path) {
+//   if (
+//     currentNodeCount >= currentNode.childNodes.length ||
+//     currentNode == undefined
+//   ) {
+//     return "";
+//   }
+//   path =
+//     path +
+//     currentNode.tagName.toLowerCase() +
+//     ` > :nth-child(${currentNodeCount + 1})`;
+//   if (currentNode == target) {
+//     return path;
+//   }
+//   path = path + findPath(currentNode.childNodes[currentNodeCount], 0, target);
+//   path = path + findPath(currentNode, currentNodeCount + 1, target);
+//   return path;
+// }
