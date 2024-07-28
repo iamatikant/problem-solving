@@ -5,32 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="./curr3.js"></script>
-    <script>
-      function curry(fn) {
-        let helper = (...args) => {
-          // if we are receiving the expected number of arguments
-          console.log("fn.length: ", fn.length);
-          if (args.length >= fn.length) {
-            // pass it to callback fn
-            return fn(...args);
-          } else {
-            // return a new function that will accept the remaining arguments
-            let temp = (...args2) => {
-              // recursively call the same function
-              // to validate if we have received the required amount
-              // of arguments
-              return helper(...args, ...args2);
-            };
-
-            // return the function
-            return temp;
-          }
-        };
-
-        // return helper
-        return helper;
-      }
-    </script>
   </head>
   <body></body>
 </html>

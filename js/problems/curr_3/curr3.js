@@ -8,6 +8,21 @@ console.log(curriedSum(1, 2, 3, 4, 5)); // 10
 console.log(curriedSum(1)(2, 3)(4, 5)); // 10
 console.log(curriedSum(1)(2)(3)(4)); // 10
 
+function curry(fn) {
+  let result = [];
+  const helper = (...args1) => {
+    result = [...result, ...args1];
+    if (result.length >= fn.length) {
+      let test = result;
+      result = [];
+      return fn(...test);
+    } else {
+      return helper;
+    }
+  };
+  return helper;
+}
+
 // function curry(fn) {
 //   return (...args1) => {
 //     let result = [...args1];
@@ -30,18 +45,44 @@ console.log(curriedSum(1)(2)(3)(4)); // 10
 //   };
 // }
 
-function curry(fn) {
-  let helper = (...arg1) => {
-    let result = [...arg1];
-    if (result.length >= fn.length) {
-      return fn(...result);
-    }
+// function curry(fn) {
+//   let helper = (...arg1) => {
+//     let result = [...arg1];
+//     if (result.length >= fn.length) {
+//       return fn(...result);
+//     }
 
-    let repeat = (...args2) => {
-      result = [...result, ...args2];
-      return result;
-    };
-    return repeat;
-  };
-  return helper;
-}
+//     let repeat = (...args2) => {
+//       result = [...result, ...args2];
+//       return result;
+//     };
+//     return repeat;
+//   };
+//   return helper;
+// }
+
+// Async programming
+
+// function exec1(cb) {
+//   console.log("x"); // api call
+//   cb("done");
+// }
+
+// function callback() {
+//   exec1((data) => {
+//     console.log(data);
+//     exec1((da) => {
+//       console.log(da);
+//       exec1((d) => {
+//         console.log(d);
+//       });
+//     });
+//   });
+// }
+
+// callback();
+
+// callbacks
+// settimeout
+// promises
+// async/await
