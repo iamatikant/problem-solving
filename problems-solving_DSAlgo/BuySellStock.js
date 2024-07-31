@@ -31,16 +31,39 @@ Constraints:
 0 <= prices[i] <= 104
  */
 
-var maxProfit = function(prices) {
-  if(prices.length <= 1) {
-    return 0;
-  }
+// var maxProfit = function(prices) {
+//   if(prices.length <= 1) {
+//     return 0;
+//   }
+//   let min = prices[0];
+//   let max = 0;
+//   let maxProfit = max - min;
+//   for(let i=0; i<prices.length; i++) {
+//     let current = prices[i];
+//     let next = prices[i+1];
+//     min = current <
+//   }
+// }
+
+// Example 1:
+
+// Input: prices = [7,8,5,15,6,18]
+// Output: 5
+
+var maxProfit = function (prices) {
+  let result = 0;
   let min = prices[0];
-  let max = 0;
-  let maxProfit = max - min;
-  for(let i=0; i<prices.length; i++) {
-    let current = prices[i];
-    let next = prices[i+1];
-    min = current < 
+  for (let index = 0; index < prices.length; index++) {
+    const element = prices[index];
+    if (element < min) {
+      min = element;
+    }
+    if (element - min > result) {
+      result = element - min;
+    }
   }
-}
+  return result;
+};
+
+const prices = [7, 1, 5, 3, 6, 4];
+console.log(maxProfit(prices));
