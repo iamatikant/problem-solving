@@ -9,10 +9,10 @@ const hasDuplicateElement = (array) => {
   return false;
 };
 
-const hasDuplicate2 = (array) => {
+const hasDuplicate2 = (nums) => {
   const set = new Set();
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index];
+  for (let index = 0; index < nums.length; index++) {
+    const element = nums[index];
     if (set.has(element)) {
       return true;
     } else {
