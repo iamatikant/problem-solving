@@ -1,6 +1,7 @@
 // ip: [1,2,3,4,5,3];
 // op: true since there is a copy
 
+// the second approach is faster
 const hasDuplicateElement = (array) => {
   const set = new Set(array);
   if (set.length < array.length) {
