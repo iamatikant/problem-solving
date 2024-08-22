@@ -10,6 +10,8 @@
 // [2 3 4 5 6 1]
 // However, there is a small bug in the problem. Fix the bug and submit the problem.
 
+/******  block reversal algorithm  *********/
+
 function swap(A, i, j) {
   var temp;
   while (i <= j) {
@@ -32,7 +34,6 @@ const rotateArray = (A, B) => {
   swap(A, 0, A.length - 1);
   return A;
 };
-
 // console.log(
 //   rotateArray(
 //     [14, 5, 14, 34, 42, 63, 17, 25, 39, 61, 97, 55, 33, 96, 62, 32, 98, 77, 35],
