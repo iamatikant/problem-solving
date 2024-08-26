@@ -22,3 +22,62 @@
 //       Promise.resolve(promise)
 //       .then(resolve) // resolve, when any of the input promise resolves
 // © JavaScript Interview Guide | learnersbucket.com 43
+
+// const any = (promiseArray) => {
+//   let result = [];
+//   return new Promise(async (resolve, reject) => {
+//     for (let i = 0; i < promiseArray.length; i++) {
+//       await promiseArray[i]
+//         .then((data) => {
+//           resolve(data);
+//         })
+//         .catch((err) => {
+//           result[i] = err;
+//           if (i === promiseArray.length - 1) {
+//             reject(new AggregateError(result, "All promises were rejected"));
+//           }
+//         });
+//     }
+//   });
+// };
+
+const any = (promiseArray) => {
+  let errors = [];
+  let resolved = false;
+
+  return new Promise((resolve, reject) => {
+    promiseArray.forEach((promise, index) => {
+      promise
+        .then((data) => {
+          if (!resolved) {
+            resolved = true;
+            resolve(data);
+          }
+        })
+        .catch((err) => {
+          errors[index] = err;
+          if (errors.length === promiseArray.length && !resolved) {
+            reject(new AggregateError(errors, "All promises were rejected"));
+          }
+        });
+    });
+  });
+};
+
+const test1 = new Promise(function (resolve, reject) {
+  setTimeout(reject, 500, "one");
+});
+const test2 = new Promise(function (resolve, reject) {
+  setTimeout(reject, 600, "two");
+});
+const test3 = new Promise(function (resolve, reject) {
+  setTimeout(reject, 200, "three");
+});
+
+any([test1, test2, test3])
+  .then(function (value) {
+    console.log(value);
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
