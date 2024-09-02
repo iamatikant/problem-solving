@@ -36,24 +36,36 @@
  * @return {ListNode}
  */
 var mergeTwoLists = function (list1, list2) {
-  let list3;
-  let node1 = list1;
-  let node2 = list2;
-  let node3 = list3;
+  // let list3 = new ListNode();
+  // let node3 = list3;
 
-  while (node1.next !== null || node2.next !== null) {
-    if (node1.val < node2.val) {
-      node3.val = node1.val;
-      node1 = node1.next;
+  // while (list1.next !== null && list2.next !== null) {
+  //   if (list1.val <= list2.val) {
+  //     node3 = list1;
+  //     list1 = list1.next;
+  //   } else {
+  //     node3 = list2;
+  //     list2 = list2.next;
+  //   }
+  //   list3.next = node3;
+  // }
+
+  let dummy = new ListNode();
+  let current = dummy;
+
+  while (list1 !== null && list2 !== null) {
+    if (list1.val < list2.val) {
+      current.next = list1;
+      list1 = list1.next;
+    } else {
+      current.next = list2;
+      list2 = list2.next;
     }
-    if (node1.val > node2.val) {
-      node3.val = node2.val;
-      node2 = node2.next;
-    }
-    if (node1.val === node2.val) {
-      node3.val = node1.val;
-      node1 = node1.next;
-      node2 = node2.next;
-    }
+    current = current.next;
   }
+
+  // Attach the remaining part of list1 or list2
+  current.next = list1 !== null ? l1 : list2;
+
+  return dummy.next;
 };
