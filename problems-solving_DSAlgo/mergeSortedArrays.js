@@ -59,15 +59,14 @@ var merge = function (nums1, m, nums2, n) {
   nums1 = nums1.slice(0, m);
   let j = 0;
   let i = 0;
-  debugger;
-  while(resultArray.length < m+n) {
+  while (resultArray.length < m + n) {
     if (nums1[i] < nums2[j]) {
       resultArray.push(nums1[i]);
-      i+=1;
+      i += 1;
     } else if (nums1[i] === nums2[j]) {
       resultArray.push(nums1[i], nums2[j]);
       j += 1;
-      i+=1;
+      i += 1;
     } else {
       resultArray.push(nums2[j]);
       j += 1;
