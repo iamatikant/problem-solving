@@ -58,12 +58,12 @@ var merge = function (nums1, m, nums2, n) {
   return nums1;
 };
 
-// const nums1 = [0];
-// const m = 0;
-// const nums2 = [1];
-// const n = 1;
-// // Output: [1,2,2,3,5,6]
-// console.log(merge(nums1, m, nums2, n));
+const nums11 = [0];
+const m1 = 0;
+const nums21 = [1];
+const n1 = 1;
+// Output: [1,2,2,3,5,6]
+console.log(merge(nums11, m1, nums21, n1));
 const nums1 = [2, 0];
 const m = 1;
 const nums2 = [1];
