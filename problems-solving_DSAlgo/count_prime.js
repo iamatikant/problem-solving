@@ -1,5 +1,5 @@
 // Given an integer n, return the number of prime numbers that are strictly less than n.
-
+// Solve it in minimum time complexity.
 // Example 1:
 
 // Input: n = 10
