@@ -23,4 +23,42 @@
  * @param {number} n
  * @return {number}
  */
-var countPrimes = function (n) {};
+
+const map = new Map();
+const checkPrime = (n) => {
+  for (let i = 2; i < n; i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+};
+
+var countPrimes = function (n) {
+  console.log(map);
+  if (map.has(n)) {
+    return map.get(n);
+  }
+  if (n === 0 || n === 1 || n === 2) {
+    return 0;
+  }
+  if (n === 3) {
+    return 1;
+  }
+  let i = 3;
+  let result = 0;
+  while (i < n) {
+    result = checkPrime(i) ? result + 1 : result;
+    i += 2;
+  }
+  map.set(n, result);
+  return result;
+};
+
+console.log(countPrimes(100000));
+console.log(countPrimes(100000));
+console.log(countPrimes(100));
+console.log(countPrimes(1000));
+console.log(countPrimes(10));
+console.log(countPrimes(499979));
+console.log(countPrimes(2));
