@@ -38,3 +38,34 @@
 // 1 <= s.length <= 15
 // s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
 // It is guaranteed that s is a valid roman numeral in the range [1, 3999].
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function (s) {
+  const romanSymbols = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000,
+  };
+  s = s.split("");
+  let result = 0;
+  for (let i = 0; i < s.length; i++) {
+    const current = romanSymbols[s[i]];
+    const next = romanSymbols[s[i + 1]];
+    debugger;
+    if (next > current) {
+      result = result - current;
+    } else {
+      result = result + current;
+    }
+  }
+  return result;
+};
+
+console.log(romanToInt("MCMXCIV"));
