@@ -14,6 +14,7 @@ filteredArr should only contain the elements from the arr for which the expressi
 
 Please solve it without the built-in Array.filter method.
 
+// this is a mock commit
  
 
 Example 1:
@@ -38,12 +39,12 @@ Explanation:
 Falsey values such as 0 should be filtered out
  */
 
-var filter = function(arr, fn) {
+var filter = function (arr, fn) {
   const result = [];
   for (let index = 0; index < arr.length; index++) {
     const element = arr[index];
-    const flag = (fn(element, index));
-    if(flag) {
+    const flag = fn(element, index);
+    if (flag) {
       result.push(element);
     }
   }
