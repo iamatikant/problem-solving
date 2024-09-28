@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Server Details</title>
+  </head>
+  <body>
+    <h1>Select Server</h1>
+
+    <label for="serverSelect">Choose a server:</label>
+    <select id="serverSelect">
+      <option value="" disabled selected>Select a server</option>
+      <!-- Server options will be dynamically populated from line 62 -->
+    </select>
+
+    <h2>Server Details</h2>
+    <div id="serverDetails">
+      <p><strong>Server Name:</strong> <span id="serverName"></span></p>
+      <p><strong>IP Address of Server:</strong> <span id="serverIP"></span></p>
+      <p><strong>Hostname:</strong> <span id="hostname"></span></p>
+      <p>
+        <strong>IP Address of Scanner:</strong> <span id="scannerIP"></span>
+      </p>
+      <p><strong>SQL Server DB Name:</strong> <span id="dbName"></span></p>
+      <p>
+        <strong>SQL Server Table Name:</strong> <span id="tableName"></span>
+      </p>
+      <p><strong>SQL Server User Name:</strong> <span id="userName"></span></p>
+      <p><strong>Service Name:</strong> <span id="serviceName"></span></p>
+      <p><strong>Log File Name:</strong> <span id="logFileName"></span></p>
+    </div>
+
+    <script>
+      /* get this from the fetch call */
+      const serverData = [
+        {
+          serverName: "Server1",
+          serverIP: "192.168.1.1",
+          hostname: "server1.local",
+          scannerIP: "192.168.1.101",
+          dbName: "MainDB",
+          tableName: "DataTable1",
+          userName: "admin1",
+          serviceName: "Service1",
+          logFileName: "server1.log",
+        },
+        {
+          serverName: "Server2",
+          serverIP: "192.168.1.2",
+          hostname: "server2.local",
+          scannerIP: "192.168.1.102",
+          dbName: "MainDB2",
+          tableName: "DataTable2",
+          userName: "admin2",
+          serviceName: "Service2",
+          logFileName: "server2.log",
+        },
+      ];
+
+      // server drop down value
+      const serverSelect = document.getElementById("serverSelect");
+      serverData.forEach((server) => {
+        const option = document.createElement("option");
+        option.value = server.serverName;
+        option.textContent = server.serverName;
+        serverSelect.appendChild(option);
+      });
+
+      // Function to display server details
+      function displayServerDetails(server) {
+        document.getElementById("serverName").textContent = server.serverName;
+        document.getElementById("serverIP").textContent = server.serverIP;
+        document.getElementById("hostname").textContent = server.hostname;
+        document.getElementById("scannerIP").textContent = server.scannerIP;
+        document.getElementById("dbName").textContent = server.dbName;
+        document.getElementById("tableName").textContent = server.tableName;
+        document.getElementById("userName").textContent = server.userName;
+        document.getElementById("serviceName").textContent = server.serviceName;
+        document.getElementById("logFileName").textContent = server.logFileName;
+      }
+
+      // Event listener for when a server is selected
+      serverSelect.addEventListener("change", function () {
+        const selectedServerName = this.value;
+        const selectedServer = serverData.find(
+          (server) => server.serverName === selectedServerName
+        );
+        if (selectedServer) {
+          displayServerDetails(selectedServer);
+        }
+      });
+    </script>
+  </body>
+</html>
