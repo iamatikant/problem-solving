@@ -29,67 +29,177 @@
       <p><strong>SQL Server User Name:</strong> <span id="userName"></span></p>
       <p><strong>Service Name:</strong> <span id="serviceName"></span></p>
       <p><strong>Log File Name:</strong> <span id="logFileName"></span></p>
+      <p>
+        <strong>Start date: </strong>
+        <input type="datetime-local" id="startDate" name="startDate" />
+      </p>
+      <p>
+        <strong>End date: </strong>
+        <input type="datetime-local" id="endDate" name="endDate" />
+      </p>
+    </div>
+    <div id="tableContent">
+      <button id="fetchDataBtn">Fetch Server Details</button>
+
+      <div id="additionalActionButtons" style="margin-block: 20px">
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="restart">Restart</button>
+      </div>
+
+      <!-- Table to display server data -->
+      <table id="serverTable" style="display: none">
+        <thead>
+          <tr>
+            <th>Server Name</th>
+            <th>IP Address of Server</th>
+            <th>Hostname</th>
+            <th>IP Address of Scanner</th>
+            <th>SQL Server DB Name</th>
+            <th>SQL Server Table Name</th>
+            <th>SQL Server User Name</th>
+            <th>Service Name</th>
+          </tr>
+        </thead>
+        <tbody id="serverTableBody">
+          <!-- Rows will be dynamically added here -->
+        </tbody>
+      </table>
     </div>
 
     <script>
-      /* get this from the fetch async call */
-      const serverData = [
-        {
-          serverName: "Server1",
-          serverIP: "192.168.1.1",
-          hostname: "server1.local",
-          scannerIP: "192.168.1.101",
-          dbName: "MainDB",
-          tableName: "DataTable1",
-          userName: "admin1",
-          serviceName: "Service1",
-          logFileName: "server1.log",
-        },
-        {
-          serverName: "Server2",
-          serverIP: "192.168.1.2",
-          hostname: "server2.local",
-          scannerIP: "192.168.1.102",
-          dbName: "MainDB2",
-          tableName: "DataTable2",
-          userName: "admin2",
-          serviceName: "Service2",
-          logFileName: "server2.log",
-        },
-      ];
+      // URL of the mock API to fetch users
+      const getServers = "https://swapi.dev/api/planets";
+      const getServerDetailApi = "https://swapi.dev/api/planets/";
+      let palets = [];
 
-      // server drop down value
-      const serverSelect = document.getElementById("serverSelect");
-      serverData.forEach((server) => {
-        const option = document.createElement("option");
-        option.value = server.serverName;
-        option.textContent = server.serverName;
-        serverSelect.appendChild(option);
-      });
+      // Function to fetch data from the API and populate the select element
+      async function populateSelect() {
+        try {
+          const response = await fetch(getServers);
+          const data = await response.json();
+          planets = data.results;
 
-      // Function to display server details
-      function displayServerDetails(server) {
-        document.getElementById("serverName").textContent = server.serverName;
-        document.getElementById("serverIP").textContent = server.serverIP;
-        document.getElementById("hostname").textContent = server.hostname;
-        document.getElementById("scannerIP").textContent = server.scannerIP;
-        document.getElementById("dbName").textContent = server.dbName;
-        document.getElementById("tableName").textContent = server.tableName;
-        document.getElementById("userName").textContent = server.userName;
-        document.getElementById("serviceName").textContent = server.serviceName;
-        document.getElementById("logFileName").textContent = server.logFileName;
+          // Select the <select> element by its ID
+          const selectElement = document.getElementById("serverSelect");
+
+          // Loop through each user and create an <option> element
+          planets.forEach((planet) => {
+            const option = document.createElement("option");
+            option.value = planet.name; // Set the value attribute
+            option.textContent = planet.name; // Set the visible option text
+            selectElement.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error fetching the users:", error);
+        }
       }
 
-      // Event listener for when a server is selected
-      serverSelect.addEventListener("change", function () {
-        const selectedServerName = this.value;
-        const selectedServer = serverData.find(
-          (server) => server.serverName === selectedServerName
-        );
-        if (selectedServer) {
-          displayServerDetails(selectedServer);
+      function displayServerDetails(server) {
+        document.getElementById("serverName").textContent = server.climate;
+        document.getElementById("serverIP").textContent = server.gravity;
+        document.getElementById("hostname").textContent = server.orbitalPeriod;
+        document.getElementById("scannerIP").textContent = server.population;
+        document.getElementById("dbName").textContent = server.rotation_period;
+        document.getElementById("tableName").textContent = server.surface_water;
+        document.getElementById("userName").textContent = server.terrain;
+        document.getElementById("serviceName").textContent = server.diameter;
+        document.getElementById("logFileName").textContent = server.name;
+      }
+
+      async function fetchSelectedServerDetails(index) {
+        const serverDetails = await fetch(`${getServerDetailApi}${index}`);
+        const serverData = await serverDetails.json();
+        console.log("serverData: ", serverData);
+        displayServerDetails(serverData);
+      }
+
+      document
+        .getElementById("serverSelect")
+        .addEventListener("change", (event) => {
+          const selectedValue = event.target.value;
+          const index = planets.findIndex((planet) => {
+            console.log("planetName: ", planet.name);
+            return planet.name === selectedValue; // Correct comparison condition
+          });
+
+          if (index >= 0) {
+            fetchSelectedServerDetails(index); // Fetch details for the found index
+          }
+        });
+      populateSelect();
+
+      /* ******** Search button click feature ******** */
+      function onSearchClick() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        console.log(startDate, endDate);
+
+        //Retrieve the values from api calls
+      }
+
+      const apiUrl = "https://jsonplaceholder.typicode.com/users"; // This is a mock API for demonstration
+
+      // Function to create a new table row with the server data
+      function createTableRow(server) {
+        const tr = document.createElement("tr");
+
+        // Create and append cells for each column
+        const serverName = `<td>${server.name || "N/A"}</td>`;
+        const ipAddressOfServer = `<td>${
+          server.address?.geo?.lat || "N/A"
+        }</td>`;
+        const hostname = `<td>${server.username || "N/A"}</td>`;
+        const ipAddressOfScanner = `<td>${
+          server.address?.geo?.lng || "N/A"
+        }</td>`;
+        const sqlServerDbName = `<td>Database_${server.id || "N/A"}</td>`;
+        const sqlServerTableName = `<td>Table_${server.id || "N/A"}</td>`;
+        const sqlServerUserName = `<td>${server.email || "N/A"}</td>`;
+        const serviceName = `<td>Service_${server.id || "N/A"}</td>`;
+
+        // Add all the cells to the row
+        tr.innerHTML =
+          serverName +
+          ipAddressOfServer +
+          hostname +
+          ipAddressOfScanner +
+          sqlServerDbName +
+          sqlServerTableName +
+          sqlServerUserName +
+          serviceName;
+
+        return tr;
+      }
+
+      // Function to populate the table with data
+      async function fetchServerDetails() {
+        try {
+          const response = await fetch(apiUrl);
+          const serverData = await response.json(); // Assume this contains the data from the API
+
+          // Display the table
+          const table = document.getElementById("serverTable");
+          table.style.display = "table";
+
+          // Clear any previous rows
+          const tableBody = document.getElementById("serverTableBody");
+          tableBody.innerHTML = "";
+
+          // Iterate over the API data and create rows for the table
+          serverData.forEach((server) => {
+            const newRow = createTableRow(server);
+            tableBody.appendChild(newRow);
+          });
+        } catch (error) {
+          console.error("Error fetching server details:", error);
         }
-      });
+      }
+
+      // Add event listener to the button to fetch data on click
+      document
+        .getElementById("fetchDataBtn")
+        .addEventListener("click", fetchServerDetails);
     </script>
   </body>
 </html>
