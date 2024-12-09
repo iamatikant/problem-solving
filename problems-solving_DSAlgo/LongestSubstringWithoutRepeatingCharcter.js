@@ -102,6 +102,7 @@ var longestSubstring = function (word) {
   return maxLength;
 };
 
+console.log(longestSubstring("abcabcbb"));
 console.log(longestSubstring("dvdf"));
 console.log(longestSubstring("atikant"));
 console.log(longestSubstring("abcabcbb"));
