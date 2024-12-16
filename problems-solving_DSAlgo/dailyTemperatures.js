@@ -30,12 +30,33 @@
 var dailyTemperatures = function (temperatures) {
   const monoStaticStack = [];
   const map = new Map();
+  const result = new Array(temperatures.length).fill(0);
+  let pointer = result.length - 1;
   for (let i = temperatures.length - 1; i >= 0; i--) {
-    let ele = temperatures[i];
-    const k = monoStaticStack.length - 1 || -1;
-    while (k >= 0 && ele > monoStaticStack[k]) {
+    const ele = temperatures[i];
+    let k = monoStaticStack.length - 1 || 0;
+    while (k >= 0 && ele >= monoStaticStack[k]) {
       monoStaticStack.pop();
       k--;
     }
+    if (k + 1 === 0) {
+      pointer -= 1;
+    } else {
+      result[pointer] = map.get(monoStaticStack[k]) - i || 0;
+      pointer -= 1;
+    }
+    monoStaticStack.push(ele);
+    map.set(ele, i);
   }
+  return result;
 };
+
+// let temperatures = [30, 40, 50, 60];
+// let temperatures = [73, 74, 75, 71, 69, 72, 76, 73];
+let temperatures = [89, 62, 70, 58, 47, 47, 46, 76, 100, 70];
+// [8,1,5,4,3,2,1,1,0,0]
+// [8, 1, 5, 4, 1, 2, 1, 1, 0, 0]
+
+// Output: [1,1,4,2,1,1,0,0]
+console.log(dailyTemperatures(temperatures));
+// Example 2:
