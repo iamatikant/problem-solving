@@ -25,7 +25,7 @@
  * @return {number}
  */
 function largestRectangleArea(heights) {
-  const stack = []; // Stack to store indices
+  const stack = []; // Stack to store indexes
   let maxArea = 0; // Variable to track the maximum area
 
   // Add a sentinel value (0 height) at the end to flush remaining heights in the stack
