@@ -30,7 +30,6 @@ function largestRectangleArea(heights) {
 
   // Add a sentinel value (0 height) at the end to flush remaining heights in the stack
   heights.push(0);
-
   for (let i = 0; i < heights.length; i++) {
     // Ensure the stack remains monotonic (increasing heights)
     while (stack.length > 0 && heights[i] < heights[stack[stack.length - 1]]) {
