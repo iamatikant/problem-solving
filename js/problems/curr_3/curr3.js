@@ -12,8 +12,10 @@ function curry(fn) {
   let result = [];
   const helper = (...args1) => {
     result = [...result, ...args1];
+    console.log("results: ", result);
     if (result.length >= fn.length) {
       let test = result;
+      console.log("inside if test: ", test);
       result = [];
       return fn(...test);
     } else {

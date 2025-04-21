@@ -1,4 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "github.copilot.editor.enableAutoCompletions": false
+  "github.copilot.editor.enableAutoCompletions": false,
+  "editor.insertSpaces": true,
+  "editor.indentSize": "tabSize",
+  "sonarlint.disableTelemetry": true
 }

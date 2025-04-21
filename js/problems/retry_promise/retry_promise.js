@@ -109,3 +109,25 @@ async function wait(delay) {
     setTimeout(resolve, delay);
   });
 }
+
+// retry(asyncFn, retries = 3, delay = 50, finalError = 'Failed');
+
+// const retryWithDelay = async (fn, retryCount, delay, finalError) => {
+//   try {
+//     const response = await fn();
+//     return response;
+//   } catch {
+//     if(retryCount <= 0) {
+//       return finalError;
+//     }
+//     await waitForTime(delay);
+//     retryCount -= 1;
+//     return await retryWithDelay(fn, retryCount, delay, finalError);
+//   }
+// }
+
+// const waitForTime = (delay) => {
+//   return new Promise((resolve) => {
+//     setTimeout(resolve, delay);
+//   })
+// }
