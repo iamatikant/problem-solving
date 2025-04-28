@@ -45,35 +45,37 @@
  * @return {string}
  */
 function listFormat(items, options) {
-    let result = "";
-    if (!items || !items.length) {
-        return "";
+  let result = "";
+  if (!items || !items.length) {
+    return "";
+  }
+  items = items.filter(name => name !== "");
+  if (items.length === 1) {
+    return items[0];
+  }
+  let untilLength = items.length;
+  let left = "";
+  let right = "";
+  if (options) {
+    if (options["unique"]) {
+      items = [...new Set(items)];
+      untilLength = items.length - 1;
     }
-    if (items.length === 1) {
-        return items[0];
+    if (options.sorted) {
+      items = items.sort();
     }
-    let untilLength = items.length;
-    let left = "";
-    let right = "";
-    if (options) {
-        if (options["unique"]) {
-            items = [...new Set(items)];
-            untilLength = items.length - 1;
-        }
-        if (options.sorted) {
-            items = items.sort();
-        }
-        if (options.length) {
-            untilLength = options.length;
-            const remaininingCount = items.length - untilLength;
-            right = ` and ${remaininingCount} others`;
-        }
+    if (options.length) {
+      untilLength = options.length + 1;
+      const remainingCount = items.length - options.length;
+      right = remainingCount > 1 ? ` and ${remainingCount} others` : ` and ${remainingCount} other`;
     }
+  }
 
-    left = items.slice(0, untilLength - 1);
-    right = right === "" ? ` and ${items[untilLength - 1]}` : right;
+  left = items.slice(0, untilLength - 1);
+  right = right === "" ? ` and ${items[untilLength - 1]}` : right;
 
-    result = left.join(', ').concat(right);
-    return result;
+  result = left.join(", ").concat(right);
+  return result;
 }
 
+console.log("this", listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], { length: 3 }));
