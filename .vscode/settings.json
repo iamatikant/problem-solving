@@ -3,5 +3,7 @@
   "github.copilot.editor.enableAutoCompletions": false,
   "editor.insertSpaces": true,
   "editor.indentSize": "tabSize",
-  "sonarlint.disableTelemetry": true
+  "sonarlint.disableTelemetry": true,
+  "github.copilot.inlineSuggest.enable": false,
+  "github.copilot.chat.enable": true
 }
