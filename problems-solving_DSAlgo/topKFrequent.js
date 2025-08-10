@@ -41,9 +41,10 @@ var topKFrequent = function (nums, k) {
   }
 
   for (const element of frequency.keys()) {
-    console.log("element: ", element);
+    console.log('element: ', element);
     if (result.length < k) {
       result.push(element);
+      e;
       continue;
     }
     const occurrence = frequency.get(element);
