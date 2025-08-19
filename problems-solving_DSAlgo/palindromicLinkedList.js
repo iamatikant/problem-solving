@@ -33,39 +33,37 @@
 
 // How would you like to approach this? Let's start with step 1: How would you find the middle of the linked list?
 
-function palindromeLinkedList(head) {
-  const leftArray = [];
+function isPalindrome(head) {
+  if (!head || !head.next) return true;
 
-  const reverseLL = (start) => {
-    if (!start) {
-      return null;
-    }
-    const reversedArray = [];
-    let cur = start;
-    let next = null;
-    let prev = null;
-
-    while (cur.next !== null) {
-      reversedArray.push(cur.val);
-      next = cur.next;
-      cur.next = prev;
-      prev = cur;
-      cur = next;
-    }
-    return reversedArray;
-  };
-
-  let fast = head;
+  // Step 1: Find the middle using fast & slow pointers
   let slow = head;
-  let pivot = slow;
-  while (!fast.next || fast.next !== null) {
-    leftArray.push(slow.val);
+  let fast = head;
+  while (fast && fast.next) {
     slow = slow.next;
-    pivot = slow;
     fast = fast.next.next;
   }
-  let reversedArray = reverseLL(slow.next);
-  reverseLL(pivot);
 
-  return reversedArray === leftArray;
+  // Step 2: Reverse the second half
+  let prev = null;
+  let curr = slow;
+  while (curr) {
+    let nextTemp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nextTemp;
+  }
+
+  // Step 3: Compare the first half and the reversed second half
+  let firstHalf = head;
+  let secondHalf = prev;
+  while (secondHalf) {
+    if (firstHalf.val !== secondHalf.val) {
+      return false;
+    }
+    firstHalf = firstHalf.next;
+    secondHalf = secondHalf.next;
+  }
+
+  return true;
 }
