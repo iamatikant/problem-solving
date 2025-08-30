@@ -97,3 +97,7 @@ var wordBreak = function (s, wordDict) {
 
   return canBreak(s);
 };
+
+console.log(
+  wordBreak('dogsandcat', ['leet', 'code', 'dog', 'dogs', 'and', 'cat'])
+);
