@@ -24,4 +24,67 @@
  * @param {number[]} nums
  * @return {number}
  */
-var rob = function (nums) {};
+// var rob = function (nums) {
+//   const dp = [];
+//   dp[0] = nums[0];
+//   dp[1] = nums[0] > nums[1] ? nums[0] : nums[1];
+//   dp[2] = nums[0] + nums[2] > nums[1] ? nums[0] + nums[2] : nums[1];
+//   const map = new Map();
+//   map.set(0, dp[0]);
+//   map.set(1, dp[1]);
+//   map.set(2, dp[2]);
+
+//   const calculateEarning = (i) => {
+//     if (map.has(i)) {
+//       return map.get(i);
+//     }
+
+//     map.set(
+//       i,
+//       Math.max(nums[i] + calculateEarning(i - 2), calculateEarning(i - 1))
+//     );
+
+//     return map.get(i);
+//   };
+
+//   return calculateEarning(nums.length - 1);
+// };
+
+// var rob = function (nums) {
+//   if (nums.length <= 2) {
+//     return Math.max(...nums);
+//   }
+//   const dp = [];
+//   dp[0] = nums[0];
+//   dp[1] = nums[0] > nums[1] ? nums[0] : nums[1];
+//   dp[2] = nums[0] + nums[2] > nums[1] ? nums[0] + nums[2] : nums[1];
+
+//   for (let i = 2; i < nums.length; i++) {
+//     dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
+//   }
+
+//   return dp[nums.length - 1];
+// };
+
+var rob = function (nums) {
+  if (!nums || nums.length === 0) {
+    return 0;
+  }
+  if (nums.length === 1) {
+    return nums[0];
+  }
+
+  const dp = new Array(nums.length);
+  dp[0] = nums[0];
+  dp[1] = Math.max(nums[0], nums[1]);
+
+  for (let i = 2; i < nums.length; i++) {
+    dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);
+  }
+  return dp[nums.length - 1];
+};
+
+const nums = [2, 7, 9, 3, 1];
+
+// Output: 12
+console.log(rob(nums));
