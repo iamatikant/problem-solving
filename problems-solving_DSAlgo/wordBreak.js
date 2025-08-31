@@ -98,6 +98,33 @@ var wordBreak = function (s, wordDict) {
   return canBreak(s);
 };
 
+const wordBreak2 = (word = '', dict = []) => {
+  const dictionary = new Set(dict);
+  const map = new Map();
+  const canBreak = (str) => {
+    for (i = 1; i <= str.length; i++) {
+      if (str.length === 0) {
+        return true;
+      }
+      if (map.has(str)) {
+        return map.get(str);
+      }
+      let prefix = str.substring(0, i);
+      if (dictionary.has(prefix)) {
+        const suffix = str.substring(i);
+        if (canBreak(suffix)) {
+          map.set(str, true);
+          return true;
+        }
+      }
+    }
+    map.set(str, false);
+    return false;
+  };
+
+  return canBreak(word);
+};
+
 console.log(
-  wordBreak('dogsandcat', ['leet', 'code', 'dog', 'dogs', 'and', 'cat'])
+  wordBreak2('dogsandcat', ['leet', 'code', 'dog', 'dogs', 'and', 'cat'])
 );
