@@ -123,10 +123,13 @@ class Node {
 class LRUCache {
   constructor(capacity) {
     this.capacity = capacity;
-    this.head = new Node(0, 0);
-    this.tail = new Node(0, 0);
-    this.head.next = this.tail.prev;
     this.map = new Map();
+
+    this.head = new Node(0, 0); // dummy head
+    this.tail = new Node(0, 0); // dummy tail
+
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
   }
 
   _addToFront(node) {
@@ -137,18 +140,17 @@ class LRUCache {
   }
 
   _removeNode(node) {
-    node.next.prev = node.prev;
     node.prev.next = node.next;
+    node.next.prev = node.prev;
   }
 
   get(key) {
-    if (!this.map.has(key)) {
-      return -1;
-    }
+    if (!this.map.has(key)) return -1;
 
     const node = this.map.get(key);
     this._removeNode(node);
     this._addToFront(node);
+
     return node.value;
   }
 
@@ -159,18 +161,14 @@ class LRUCache {
       this._removeNode(node);
       this._addToFront(node);
     } else {
-      const size = this.map.size;
-      const node = new Node(key, value);
-      if (size < this.capacity) {
-        this._addToFront(node);
-      } else {
-        this._addToFront(node);
+      if (this.map.size >= this.capacity) {
         const lru = this.tail.prev;
         this._removeNode(lru);
         this.map.delete(lru.key);
       }
-
-      this.map.set(key, node);
+      const newNode = new Node(key, value);
+      this._addToFront(newNode);
+      this.map.set(key, newNode);
     }
   }
 }
