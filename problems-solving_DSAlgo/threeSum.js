@@ -398,3 +398,41 @@ var threeSum = function (nums) {
 // ];
 
 console.log(threeSum([-1, 0, 1, 2, -1, -4]));
+
+var sumThree = (arr) => {
+  if (!arr || arr.length < 3) {
+    return -1;
+  }
+
+  let result = [];
+
+  const dp = Array.from({ length: 6 }, () => Array(4).fill(0));
+  console.log('dp: ', dp);
+
+  for (let i = 0; i < arr.length - 2; i++) {
+    if (i > 0 && arr[i] === arr[i - 1]) continue; // avoids duplicate
+
+    let left = i + 1;
+    let right = arr.length - 1;
+    let req = 0 - arr[i];
+
+    while (left < right) {
+      let sum = arr[left] + arr[right];
+      if (sum === req) {
+        result.push([arr[i], arr[left], arr[right]]);
+        while (left > 0 && arr[left] === arr[left + 1]) left++;
+        while (right < arr.length - 1 && arr[right] === arr[right + 1]) right--;
+        left++;
+        right--;
+      } else if (sum > req) {
+        right--;
+      } else {
+        left++;
+      }
+    }
+  }
+
+  return result;
+};
+
+console.log(sumThree([-1, 0, 1, 2, -1, -4]));
