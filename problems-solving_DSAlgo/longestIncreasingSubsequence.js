@@ -39,23 +39,40 @@
 //   }
 
 //   return Math.max(...dp);
+// // };
+
+// var lengthOfLIS = function (nums) {
+//   const dp = [];
+//   for (let i = 0; i < nums.length; i++) {
+//     let maxSubValue = 0;
+//     for (let j = 0; j < i; j++) {
+//       if (nums[j] < nums[i]) {
+//         maxSubValue = Math.max(dp[j], maxSubValue);
+//       }
+//     }
+//     dp[i] = 1 + maxSubValue;
+//   }
+
+//   return Math.max(...dp);
 // };
 
-var lengthOfLIS = function (nums) {
-  const dp = [];
+// const nums = [10, 9, 2, 5, 3, 7, 101, 18];
+
+const LIS = (nums) => {
+  const dp = Array.from({ length: nums.length }).fill(1);
   for (let i = 0; i < nums.length; i++) {
-    let maxSubValue = 0;
-    for (let j = 0; j < i; j++) {
+    let j = 0;
+    while (j < i) {
       if (nums[j] < nums[i]) {
-        maxSubValue = Math.max(dp[j], maxSubValue);
+        dp[i] = Math.max(dp[i], 1 + dp[j]);
       }
+      j++;
     }
-    dp[i] = 1 + maxSubValue;
   }
 
   return Math.max(...dp);
 };
+const nums = [10, 9, 2, 5, 3, 7, 101, 18];
+console.log(LIS(nums));
 
-// const nums = [10, 9, 2, 5, 3, 7, 101, 18];
-const nums = [0, 8, 4, 12, 2];
-console.log(lengthOfLIS(nums));
+const LIS2 = (nums) => {};
