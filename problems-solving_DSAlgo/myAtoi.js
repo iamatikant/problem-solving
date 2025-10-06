@@ -84,37 +84,88 @@
  * @param {string} s
  * @return {number}
  */
+// var myAtoi = function (s) {
+//   const INT_MAX = 2 ** 31 - 1;
+//   const INT_MIN = -(2 ** 31);
+//   let number = "";
+//   let result = 0;
+//   let pow = 0;
+//   let sign = 1;
+//   s = s.trim();
+//   if (s[0] === "-" || s[0] === "+") {
+//     sign = s[0] === "-" ? -1 : 1;
+//     s = s.split("").slice(1);
+//   }
+//   for (let index = 0; index < s.length; index++) {
+//     const element = s[index];
+//     if (element.match(/[0-9]/)) {
+//       number += element;
+//     } else break;
+//   }
+//   for (let i = number.length - 1; i >= 0; i--) {
+//     let element = number[i];
+//     result = result + element * Math.pow(10, pow);
+//     pow++;
+//   }
+//   if (sign * result < INT_MIN) {
+//     return INT_MIN;
+//   }
+//   if (sign * result > INT_MAX) {
+//     return INT_MAX;
+//   }
+//   return result * sign;
+// };
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
 var myAtoi = function (s) {
-  const INT_MAX = 2 ** 31 - 1;
-  const INT_MIN = -(2 ** 31);
-  let number = "";
-  let result = 0;
-  let pow = 0;
-  let sign = 1;
   s = s.trim();
-  if (s[0] === "-" || s[0] === "+") {
-    sign = s[0] === "-" ? -1 : 1;
-    s = s.split("").slice(1);
+  const MAX_INT = 2 ** 31 - 1;
+  const MIN_INT = -(2 ** 31);
+  const regExp = /[0-9+-]/;
+  let numberString = '';
+  let result = 0;
+  if (!s[0].match(regExp)) {
+    return 0;
+  } else {
+    numberString += s[0];
   }
-  for (let index = 0; index < s.length; index++) {
-    const element = s[index];
-    if (element.match(/[0-9]/)) {
-      number += element;
-    } else break;
+  let index = 1;
+  while (s[index] && s[index].match(/[0-9]/)) {
+    numberString += s[index];
+    index++;
   }
-  for (let i = number.length - 1; i >= 0; i--) {
-    let element = number[i];
-    result = result + element * Math.pow(10, pow);
-    pow++;
+
+  let sign = undefined;
+  if (numberString[0] === '-' || numberString[0] === '+') {
+    sign = numberString[0] === '-' ? -1 : undefined;
+    numberString = numberString.slice(1);
   }
-  if (sign * result < INT_MIN) {
-    return INT_MIN;
+  index = 0;
+  while (index < numberString.length) {
+    const temp = parseInt(numberString[index]);
+    if (sign) {
+      if (-(result * 10 + temp) <= MIN_INT) {
+        return MIN_INT;
+      }
+    }
+    if (result * 10 + temp >= MAX_INT) {
+      return MAX_INT;
+    }
+    result = result * 10 + temp;
+    index++;
   }
-  if (sign * result > INT_MAX) {
-    return INT_MAX;
+
+  if (sign === -1) {
+    return -result;
   }
-  return result * sign;
+  return result;
 };
 
-console.log(myAtoi("-2adsfa00"));
-console.log(myAtoi("+1"));
+// -,+,a,2
+
+console.log(myAtoi('-2adsfa00'));
+console.log(myAtoi('+1'));
+console.log(myAtoi('asnva 24'));
