@@ -61,23 +61,45 @@
 
 // This is a medium-to-hard problem that really tests your command of the sliding window pattern. Give it a shot.
 
+// const longestSubstring = (str, k) => {
+//   let map = new Map();
+//   let maxLength = 0;
+//   let left = 0;
+//   let right = 0;
+//   let maxFreq = 0;
+//   while (right < str.length) {
+//     let current = str[right];
+//     map.set(current, (map.get(current) ?? 0) + 1);
+//     let windowSize = right - left + 1;
+//     maxFreq = Math.max(maxFreq, map.get(current));
+//     if (windowSize - maxFreq > k) {
+//       map.set(str[left], map.get(str[left]) - 1);
+//       left += 1;
+//     } else {
+//       maxLength = Math.max(maxLength, right - left + 1);
+//     }
+//     right++;
+//   }
+
+//   return maxLength;
+// };
+
 const longestSubstring = (str, k) => {
-  let map = new Map();
-  let maxLength = 0;
   let left = 0;
   let right = 0;
-  let maxFreq = 0;
+  let maxLength = 0;
+  let map = new Map(); // for storing character counts
+  let maxFreq = 0; // most freq element count
   while (right < str.length) {
-    let current = str[right];
-    map.set(current, (map.get(current) ?? 0) + 1);
-    let windowSize = right - left + 1;
-    maxFreq = Math.max(maxFreq, map.get(current));
-    if (windowSize - maxFreq > k) {
+    let char = str[right];
+    const windowLength = right - left + 1;
+    map.set(char, (map.get(char) || 0) + 1);
+    maxFreq = Math.max(maxFreq, map.get(char));
+    if (windowLength - maxFreq > k) {
       map.set(str[left], map.get(str[left]) - 1);
       left += 1;
-    } else {
-      maxLength = Math.max(maxLength, right - left + 1);
     }
+    maxLength = Math.max(maxLength, right - left + 1);
     right++;
   }
 

@@ -1,0 +1,36 @@
+he "Final Boss" DSA Study List
+Arrays & Strings (Two Pointers / Sliding Window)
+
+1. 3Sum (Medium) - Sort + Two Pointers. [We covered this]
+2. Container With Most Water (Medium) - Two Pointers from ends. [We covered this]
+3. Longest Substring Without Repeating Characters (Medium) - Sliding Window with Set/Map. [We covered this]
+4. Longest Repeating Character Replacement (Medium) - Sliding Window with Frequency Map. [We covered this]
+5. Minimum Window Substring (Hard) - Advanced Sliding Window.
+6. Graphs / Matrix Traversal (BFS / DFS) 6. Number of Islands (Medium) - Classic BFS or DFS. [We covered this] 
+7. Clone Graph (Medium) - Graph traversal with a map to track visited/cloned nodes. 
+8. Rotting Oranges (Medium) - Multi-source BFS. 
+9. Pacific Atlantic Water Flow (Medium) - Start BFS/DFS from the "ocean" and move inwards.
+
+Heaps / Priority Queues ("Top K" Problems) 
+10. Merge K Sorted Lists (Hard) - Min-Heap. [We covered this] 
+11. Top K Frequent Elements (Medium) - Freq Map + Min-Heap of size K. [We discussed this] 
+12. Find Median from Data Stream (Hard) - The classic Two-Heap problem (one Min-Heap, one Max-Heap).
+
+Dynamic Programming (DP) 
+13. Climbing Stairs (Easy) - Foundational 1D DP. [We covered this] 
+14. House Robber (Medium) - Classic 1D DP. [We covered this] 
+15. Coin Change (Medium) - Unbounded Knapsack DP pattern. [We covered this] 
+16. Longest Increasing Subsequence (Medium) - N-squared DP. [We covered this] --> revisit this
+17. Word Break (Medium) - 1D DP on a string. [We covered this] 
+18. Longest Palindromic Subsequence (Medium) - 2D DP on a string. (This is our current problem) 
+19. Unique Paths (Medium) - Simple 2D Grid DP.
+
+Binary Search 
+20. Search in Rotated Sorted Array (Medium) - Modified Binary Search. [We covered this] 
+21. Find Minimum in Rotated Sorted Array (Medium) - Modified Binary Search. [We covered this]
+
+Trees 
+22. Kth Smallest Element in a BST (Medium) - In-order traversal. [We covered this] 
+23. Lowest Common Ancestor of a Binary Search Tree (Easy) - Exploit BST properties. 
+24. Lowest Common Ancestor of a Binary Tree (Medium) - General recursive DFS. 
+25. Binary Tree Right Side View (Medium) - BFS, taking the last element at each level.
