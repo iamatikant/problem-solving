@@ -399,35 +399,61 @@ var threeSum = function (nums) {
 
 console.log(threeSum([-1, 0, 1, 2, -1, -4]));
 
-var sumThree = (arr) => {
-  if (!arr || arr.length < 3) {
-    return -1;
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+  // The result array
+  const result = [];
+
+  // 1. Sort the array. This is ESSENTIAL for the two-pointer approach.
+  nums.sort((a, b) => a - b);
+
+  // Edge case: if not enough numbers, return empty array.
+  if (nums.length < 3) {
+    return result;
   }
 
-  let result = [];
+  // 2. Iterate through the array, fixing one number `nums[i]`.
+  for (let i = 0; i < nums.length - 2; i++) {
+    // **CORRECT DUPLICATE HANDLING for `i`**
+    // If the current element is the same as the previous one, skip it.
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
 
-  const dp = Array.from({ length: 6 }, () => Array(4).fill(0));
-  console.log('dp: ', dp);
-
-  for (let i = 0; i < arr.length - 2; i++) {
-    if (i > 0 && arr[i] === arr[i - 1]) continue; // avoids duplicate
-
+    // 3. Use two pointers for the rest of the array.
     let left = i + 1;
-    let right = arr.length - 1;
-    let req = 0 - arr[i];
+    let right = nums.length - 1;
 
     while (left < right) {
-      let sum = arr[left] + arr[right];
-      if (sum === req) {
-        result.push([arr[i], arr[left], arr[right]]);
-        while (left > 0 && arr[left] === arr[left + 1]) left++;
-        while (right < arr.length - 1 && arr[right] === arr[right + 1]) right--;
+      const sum = nums[i] + nums[left] + nums[right];
+
+      if (sum === 0) {
+        // Found a valid triplet
+        result.push([nums[i], nums[left], nums[right]]);
+
+        // **CORRECT DUPLICATE HANDLING for `left` and `right`**
+        // Move the left pointer forward as long as it's a duplicate.
+        while (left < right && nums[left] === nums[left + 1]) {
+          left++;
+        }
+        // Move the right pointer backward as long as it's a duplicate.
+        while (left < right && nums[right] === nums[right - 1]) {
+          right--;
+        }
+
+        // Move pointers to the next unique elements.
         left++;
         right--;
-      } else if (sum > req) {
-        right--;
+      } else if (sum < 0) {
+        // Sum is too small, need a larger number.
+        left++;
       } else {
-        left++;
+        // sum > 0
+        // Sum is too big, need a smaller number.
+        right--;
       }
     }
   }
